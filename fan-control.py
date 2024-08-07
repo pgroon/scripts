@@ -1,10 +1,18 @@
+########################################
+#
+#  Short script to control the cooling
+#  fan on a Bigtreetech Pi 1.2
+#
+########################################
+
+
 import time
 import gpiod
 import subprocess
 
 from gpiod.line import Direction, Value
 
-LINE = 211 
+LINE = 211 # Pin for onboard cooling fan socket
 threshold = 46.0
 
 def run():
@@ -17,22 +25,25 @@ def run():
             )
         },
     ) as request:
-        for i in range(1):
+        while True:
             tmp=gettemp()
             print("tmp:", tmp)
             if tmp >= threshold:
+                # turn cooling fan on
+                request.set_value(LINE, Value.ACTIVE)
                 print("zu warm!")
             else:
+                # turn cooling fan off
+                request.set_value(LINE, Value.INACTIVE)
                 print("cool enough")
             print(request._check_released())
-            #request.set_value(LINE, Value.ACTIVE)
-            #time.sleep(1)
-            request.set_value(LINE, Value.INACTIVE)
-            #time.sleep(5)
-        request.release()
+            # wait before next loop
+            time.sleep(15)
 
 def gettemp():
+    # shell command to get the CPU temperature
     cmd="sensors | egrep -o -m 1 '(\+)([0-9]{1,2})(\.[0-9]{1,2})?' | head -1"
+    # run the above command as a subprocess and return the result
     temperature=subprocess.run(cmd, 
             shell=True, 
             text=True,
