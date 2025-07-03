@@ -8,5 +8,5 @@
 link=$(xclip -o)
 zenity --notification --text "Download started: ($link)"
 
-youtube-dl -x --audio-format mp3 -o '~/Downloads/Music/%(title)s.%(ext)s' "$link" &
+yt-dlp -x --audio-format mp3 -o '~/Downloads/Music/%(title)s.%(ext)s' "$link" --no-playlist &
 zenity --notification --text "Download finished!"
