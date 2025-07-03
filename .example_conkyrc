@@ -1,0 +1,52 @@
+# --------------------------------------------------------#
+# conkyrc configuration by pgroon, 04.02.2024
+# For more info visit the official conky documentation:
+# https://conky.sourceforge.net/config_settings.html
+# https://conky.sourceforge.net/variables.html
+# --------------------------------------------------------#
+
+
+alignment top_right 
+background true # Fork conky to background 
+border_margin 5 
+border_width 5
+cpu_avg_samples 3 # Number of samples to average for CPU monitoring
+net_avg_samples 2   # Number of samples to average for net data
+double_buffer yes  # meant to eleminate flickering
+draw_borders false
+draw_graph_borders false
+draw_outline false
+draw_shades false
+gap_x 40    # Distance from right/left screen border
+gap_y 20    # Distance from top/bottom screen border
+maximum_width 900
+minimum_size 350
+no_buffers true # Subtract (file system) buffers from used memory
+override_utf8_locale true   # Force UTF-8 text encoding
+own_window true # Run conky in its own window
+own_window_title pgroon-conky # Set window title
+own_window_type desktop
+own_window_hints undecorated,below,sticky,skip_taskbar,skip_pager
+own_window_transparent true
+own_window_argb_visual true
+pad_percents 2			# Pad percentages to N decimals (0 = no padding)
+format_human_readable true  # Use human-readable units (kiB, GiB, etc.)
+short_units true		# Shorten Units (kiB -> k, GiB -> G, etc.)
+text_buffer_size 1024   # Min 256 bytes 
+total_run_times 0       # Number of cycles for conky to run. Zero keeps it running indefinitely.
+update_interval 1.0  # Update interval in seconds
+uppercase false     # Render all text in upper case
+use_spacer right
+use_xft true    # Anti-aliasing fonts and stuff
+xftalpha 1
+xftfont ZegoeLight-U:pixelsize=24 # Default font and size
+template0 ${voffset 10}$alignr • 
+
+
+TEXT
+${alignr}${color white}${font ZegoeLight-U:pixelsize=80}${time %A}${font} 
+
+${alignr}${color white}${font ZegoeLight-U:pixelsize=24}${time %B %d, %Y }${font}
+${alignr}${color white}${font ZegoeLight-U:pixelsize=50}${time %H:%M:%S}${font}
+
+${execp python3 /home/groon/scripts/conky_todo.py}
