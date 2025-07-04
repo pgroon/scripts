@@ -1,11 +1,17 @@
+#!/usr/bin/env python3
+
+# Generates a .csv with metadata for a folder of .wav files.
+#
 # Example usage:
-# generate_metadata_csv("/your/path/to/wav_files")
+# meta-gen("/your/path/to/wav_files")
 
 import os
 import csv
+import sys
 import wave
 
 def generate_metadata_csv(directory_path):
+    print(f"Scanning: {directory_path}")
     output_csv_path = os.path.join(directory_path, "metadata.csv")
     metadata_list = []
 
@@ -37,3 +43,15 @@ def generate_metadata_csv(directory_path):
             writer.writerow(entry)
 
     print(f"Metadata written to {output_csv_path}")
+	
+if __name__ == "__main__":
+    if len(sys.argv) != 2:
+        print("Usage: meta-gen.py /path/to/wav-folder")
+        sys.exit(1)
+
+    wav_folder = sys.argv[1]
+
+    if not os.path.isdir(wav_folder):
+        print(f"Error: '{wav_folder}' is not a valid directory.")
+        sys.exit(1)
+    generate_metadata_csv(wav_folder)
