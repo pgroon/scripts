@@ -66,9 +66,8 @@ def find_export(wav_dir: Path, n: int) -> Path | None:
     Returns the Path if found, or None if no match.
     """
     stems = [f"{n}", f"{n:02d}", f"{n:03d}"]
-    exts  = [".wav", ".WAV"]
     for stem in stems:
-        for ext in exts:
+        for ext in (".wav", ".WAV"):
             p = wav_dir / f"{stem}{ext}"
             if p.exists():
                 return p
@@ -145,7 +144,7 @@ def main():
             # Sanitize parts for filename
             category = slugify(row["category"])
             phrase   = slugify(row["phrase"])
-            dst = wav_dir / f"{category}_{n:03d}_{phrase}.wav"
+            dst = wav_dir / f"{n:03d}_{category}_{phrase}.wav"
             dst = unique_path(dst)
 
             # Rename the file
